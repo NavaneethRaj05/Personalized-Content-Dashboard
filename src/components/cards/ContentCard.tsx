@@ -38,7 +38,7 @@ export function ContentCard({ item, id }: ContentCardProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className="group relative bg-white dark:bg-gray-900 rounded-xl shadow-sm hover:shadow-md border border-gray-100 dark:border-gray-800 overflow-hidden transition-all duration-300"
+      className="group relative bg-white/70 dark:bg-[#151515]/70 backdrop-blur-2xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/20 border border-white/50 dark:border-white/5 overflow-hidden transition-all duration-500 hover:-translate-y-1"
     >
       <div 
         {...attributes} 
@@ -92,7 +92,7 @@ export function ContentCard({ item, id }: ContentCardProps) {
         </p>
 
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-gray-400" suppressHydrationWarning>
             {new Date(item.date).toLocaleDateString()}
           </span>
           <a

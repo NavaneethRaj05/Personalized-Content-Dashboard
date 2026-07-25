@@ -23,7 +23,7 @@ export function Header() {
   };
 
   return (
-    <header className="h-16 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-10">
+    <header className="h-16 border-b border-gray-200/50 dark:border-white/10 bg-white/40 dark:bg-[#0a0a0a]/40 backdrop-blur-3xl sticky top-0 z-50">
       <div className="flex items-center justify-between h-full px-6">
         <form onSubmit={handleSearch} className="flex-1 max-w-xl">
           <div className="relative">

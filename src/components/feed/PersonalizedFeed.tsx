@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useGetTopHeadlinesQuery } from '../../services/newsApi';
 import { DraggableFeed } from './DraggableFeed';
+import { HeroSlider } from './HeroSlider';
 import { FiLoader, FiAlertCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
@@ -43,21 +44,30 @@ export function PersonalizedFeed() {
     );
   }
 
+  // Split items into hero and feed
+  const heroItems = newsItems.slice(0, 3);
+  const feedItems = newsItems.slice(3);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
+      className="space-y-8"
     >
-      <div className="mb-6 flex justify-between items-end">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Your Feed</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Personalized content based on your interests ({primaryCategory})
-          </p>
+      <HeroSlider items={heroItems} />
+      
+      <div>
+        <div className="mb-6 flex justify-between items-end">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Your Feed</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              Personalized content based on your interests ({primaryCategory})
+            </p>
+          </div>
         </div>
+        <DraggableFeed items={feedItems} />
       </div>
-      <DraggableFeed items={newsItems} />
     </motion.div>
   );
 }
