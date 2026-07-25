@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { FiSun, FiMoon, FiMenu, FiSearch } from 'react-icons/fi';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-
+import { useDebounce } from '../../hooks/useDebounce';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
@@ -22,9 +22,17 @@ export function Header({ onMenuClick }: HeaderProps) {
   const [search, setSearch] = useState('');
   const [focused, setFocused] = useState(false);
   const router = useRouter();
+  const debouncedSearch = useDebounce(search, 400);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
+
+  // Auto-navigate when debounced search value changes (after 400ms pause in typing)
+  useEffect(() => {
+    if (debouncedSearch.trim().length > 2) {
+      router.push(`/search?q=${encodeURIComponent(debouncedSearch.trim())}`);
+    }
+  }, [debouncedSearch, router]);
 
   // Keyboard shortcut ⌘K / Ctrl+K
   useEffect(() => {
@@ -85,7 +93,7 @@ export function Header({ onMenuClick }: HeaderProps) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onFocus={() => setFocused(true)}
-              placeholder="Search articles, topics…"
+              placeholder="Search articles, topics… (auto-searches after typing)"
               className="flex-1 bg-transparent text-[13.5px] text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 outline-none min-w-0"
             />
             {search && (

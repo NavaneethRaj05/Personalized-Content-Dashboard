@@ -77,6 +77,7 @@ export function ContentCard({ item, id }: ContentCardProps) {
           {/* Bookmark */}
           <button
             onClick={() => dispatch(toggleFavorite(item))}
+            aria-label="Bookmark"
             className={`absolute top-2 right-2 w-7 h-7 rounded-lg backdrop-blur-sm flex items-center justify-center transition-all ${
               isFavorite
                 ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
@@ -97,6 +98,7 @@ export function ContentCard({ item, id }: ContentCardProps) {
           </div>
           <button
             onClick={() => dispatch(toggleFavorite(item))}
+            aria-label="Bookmark"
             className={`absolute top-2 right-2 w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
               isFavorite
                 ? 'bg-indigo-600 text-white'

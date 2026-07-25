@@ -4,11 +4,15 @@ import storage from './storage';
 import preferencesReducer from './slices/preferencesSlice';
 import favoritesReducer from './slices/favoritesSlice';
 import { newsApi } from '../services/newsApi';
+import { tmdbApi } from '../services/tmdbApi';
+import { socialApi } from '../services/socialApi';
 
 const rootReducer = combineReducers({
   preferences: preferencesReducer,
   favorites: favoritesReducer,
   [newsApi.reducerPath]: newsApi.reducer,
+  [tmdbApi.reducerPath]: tmdbApi.reducer,
+  [socialApi.reducerPath]: socialApi.reducer,
 });
 
 const persistConfig = {
@@ -27,7 +31,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(newsApi.middleware),
+    }).concat(newsApi.middleware, tmdbApi.middleware, socialApi.middleware),
 });
 
 export const persistor = persistStore(store);
