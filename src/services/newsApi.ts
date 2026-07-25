@@ -3,13 +3,13 @@ import { ContentItem } from '../store/slices/favoritesSlice';
 
 export const newsApi = createApi({
   reducerPath: 'newsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://newsapi.org/v2/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
   endpoints: (builder) => ({
     getTopHeadlines: builder.query<ContentItem[], { category?: string; query?: string; page?: number }>({
       query: ({ category = 'general', query = '', page = 1 }) => {
-        let url = `top-headlines?country=us&page=${page}&pageSize=10&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`;
+        let url = `news?page=${page}`;
         if (query) {
-          url = `everything?q=${query}&page=${page}&pageSize=10&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`;
+          url += `&query=${query}`;
         } else if (category) {
           url += `&category=${category}`;
         }
