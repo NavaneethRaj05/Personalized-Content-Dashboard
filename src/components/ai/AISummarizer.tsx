@@ -94,7 +94,7 @@ export function AISummarizer({ title, description }: AISummaryProps) {
                     </div>
                     <div className="text-center">
                       <p className="text-[13px] font-medium text-gray-700 dark:text-gray-200">Generating summary…</p>
-                      <p className="text-[11px] text-gray-400 mt-0.5">Powered by Google Gemini</p>
+                      <p className="text-[11px] text-gray-400 mt-0.5">Powered by Groq</p>
                     </div>
                   </div>
                 )}
@@ -128,7 +128,7 @@ export function AISummarizer({ title, description }: AISummaryProps) {
               </div>
 
               <div className="px-5 pb-4">
-                <p className="text-[10.5px] text-gray-400 text-center">Powered by Google Gemini AI</p>
+                <p className="text-[10.5px] text-gray-400 text-center">Powered by Groq AI</p>
               </div>
             </motion.div>
           </motion.div>

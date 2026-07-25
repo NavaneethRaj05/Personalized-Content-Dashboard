@@ -1,45 +1,43 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { Groq } from 'groq-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY || '',
+});
 
 const SYSTEM_CONTEXT = `You are an intelligent news assistant built into a Personalized Content Dashboard. 
-You help users understand news articles, find related content, and get quick insights about current events.
-Keep your responses concise, friendly, and informative. When asked about specific articles, focus on the key facts.
-If you don't have specific information, give a general helpful response. Never make up specific facts.`;
+You help users understand news articles, find related content, and get quick insights about current events shown in their feed.
+CRITICAL INSTRUCTION: You MUST ONLY answer questions related to the dashboard content, news articles, or topics currently relevant to the news. 
+If the user asks a question completely unrelated to news, dashboard content, or current events (for example, coding questions, general trivia, math, personal advice, etc.), you MUST politely decline and remind them: "I am a News and Dashboard Assistant. I can only answer questions related to your news feed and dashboard content. Please ask me about current events or articles!"
+Keep your responses concise, friendly, and informative.`;
 
 export async function POST(req: NextRequest) {
   try {
     const { message, context } = await req.json();
 
-    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_gemini_api_key_here') {
-      // Mock responses when no key configured
-      const mockResponses = [
-        "I'm your AI news assistant! To enable live AI responses, add your Gemini API key to the .env.local file. Get a free key at aistudio.google.com.",
-        "This is a demonstration of the AI assistant feature. With a Gemini API key configured, I can answer questions about articles, summarize content, and help you navigate news topics.",
-        "Configure the GEMINI_API_KEY environment variable to unlock my full capabilities!",
-      ];
+    if (!process.env.GROQ_API_KEY) {
       return NextResponse.json({ 
-        reply: mockResponses[Math.floor(Math.random() * mockResponses.length)] 
+        reply: "Groq API key not configured. Please add GROQ_API_KEY to your environment variables." 
       });
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const prompt = `${context ? `Current article context: ${context}\n\n` : ''}User message: ${message}`;
 
-    const prompt = `${SYSTEM_CONTEXT}
+    const completion = await groq.chat.completions.create({
+      messages: [
+        { role: 'system', content: SYSTEM_CONTEXT },
+        { role: 'user', content: prompt }
+      ],
+      model: 'llama3-8b-8192', // Fast, default Groq model
+      temperature: 0.5,
+      max_tokens: 500,
+    });
 
-${context ? `Current article context: ${context}` : ''}
-
-User message: ${message}
-
-Provide a helpful, concise response (2-4 sentences max).`;
-
-    const result = await model.generateContent(prompt);
-    const reply = result.response.text();
+    const reply = completion.choices[0]?.message?.content || "I couldn't generate a response.";
 
     return NextResponse.json({ reply });
   } catch (error) {
-    console.error('AI Chat error:', error);
+    console.error('Groq AI Chat error:', error);
     return NextResponse.json(
       { error: 'Failed to get AI response. Please try again.' },
       { status: 500 }

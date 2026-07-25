@@ -126,7 +126,7 @@ export function AIAssistant() {
                   </div>
                   <div>
                     <p className="text-white font-bold text-sm">AI Assistant</p>
-                    <p className="text-white/70 text-xs">Powered by Gemini</p>
+                    <p className="text-white/70 text-xs">Powered by Groq</p>
                   </div>
                 </div>
                 <button
