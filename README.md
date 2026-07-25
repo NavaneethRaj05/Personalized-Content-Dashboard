@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personalized Content Dashboard
 
-## Getting Started
+A robust, full-stack frontend application built for the Software Development Engineer Intern Assignment. 
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v3
+- **State Management**: Redux Toolkit + RTK Query
+- **Persistence**: Redux Persist (localStorage)
+- **Drag & Drop**: `@dnd-kit/core`
+- **Animations**: Framer Motion
+- **Icons**: React Icons (Feather Icons)
+- **APIs Integrated**: NewsAPI (Live Data)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌟 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Personalized Feed**: Integrates live data from NewsAPI based on the user's category preferences.
+2. **User Preferences**: Select from multiple categories (Technology, Sports, Business, etc.). Preferences are persisted across sessions.
+3. **Interactive UI**:
+   - **Drag and Drop**: Reorder your feed using `@dnd-kit`'s smooth physics-based drag-and-drop.
+   - **Dark Mode**: Fully implemented dark mode using `next-themes` and Tailwind CSS.
+4. **Search Functionality**: A robust search interface using query parameters to fetch dynamic results.
+5. **Favorites System**: Save any article to your favorites for later reading. Persisted locally.
+6. **State Management**: Complex state handled natively with Redux Toolkit and caching via RTK Query.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Local Setup
 
-## Learn More
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-link>
+   cd Assignment
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Environment Variables**
+   Create a `.env.local` file in the root of the project:
+   ```env
+   NEXT_PUBLIC_NEWS_API_KEY=a433215b510446e78cdf40be41808994
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
+   The application will be available at [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+## 🧪 Testing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Testing infrastructure can be added using standard Next.js Jest and Playwright configurations.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🏗️ Architecture Decisions
+
+- **Next.js App Router**: Utilized for modern React Server Components and improved performance.
+- **Redux Persist**: Selected over raw `localStorage` to seamlessly integrate with Redux Toolkit, ensuring state is rehydrated robustly.
+- **Tailwind CSS**: Ensures rapid styling, scoped CSS, and a perfectly integrated Dark Mode using the `class` strategy.
+- **RTK Query**: Prevents redundant network requests by caching API responses effectively and providing elegant loading/error states.
+
+---
+*Developed for SDE Intern Assignment.*
