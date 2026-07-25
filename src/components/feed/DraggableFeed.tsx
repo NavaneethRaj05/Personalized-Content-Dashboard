@@ -16,7 +16,7 @@ import {
   sortableKeyboardCoordinates,
   rectSortingStrategy,
 } from '@dnd-kit/sortable';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { ContentCard } from '../cards/ContentCard';
 import { ContentItem } from '../../store/slices/favoritesSlice';
 
@@ -54,7 +54,7 @@ export function DraggableFeed({ items: initialItems }: DraggableFeedProps) {
     }
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -64,9 +64,9 @@ export function DraggableFeed({ items: initialItems }: DraggableFeedProps) {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
   };
 
   return (
