@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiHome, FiTrendingUp, FiSettings, FiSearch, FiX, FiZap, FiBookmark } from 'react-icons/fi';
@@ -19,15 +20,24 @@ interface SidebarProps {
 }
 
 function NavList({ pathname, onClose }: { pathname: string; onClose?: () => void }) {
+  const [activePath, setActivePath] = useState(pathname);
+
+  useEffect(() => {
+    setActivePath(pathname);
+  }, [pathname]);
+
   return (
     <nav className="flex-1 px-3 space-y-0.5">
       {navItems.map((item) => {
-        const isActive = pathname === item.path;
+        const isActive = activePath === item.path;
         return (
           <Link
             key={item.name}
             href={item.path}
-            onClick={onClose}
+            onClick={() => {
+              setActivePath(item.path);
+              if (onClose) onClose();
+            }}
             className={`group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13.5px] font-medium transition-all duration-150 ${
               isActive
                 ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400'
